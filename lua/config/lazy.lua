@@ -34,6 +34,19 @@ require("lazy").setup({
     },
   },
 
+  -- Theme: Base16/Tinted theming support
+  {
+    "tinted-theming/tinted-vim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.g.tinted_background_transparent = 1
+      vim.g.tinted_italic = 0
+      vim.opt.termguicolors = true
+      vim.cmd.colorscheme("base24-wez")
+    end,
+  },
+
   -- Telescope: Fuzzy finder for files, text, and more
   {
     "nvim-telescope/telescope.nvim",
