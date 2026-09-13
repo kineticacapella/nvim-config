@@ -90,6 +90,15 @@ require("lazy").setup({
     end,
   },
 
+  -- Gitsigns
+  {
+    "lewis6991/gitsigns.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {
+      attach_to_untracked = true,
+    },
+  },
+
   -- Mason
   { "williamboman/mason.nvim", opts = {} },
 
