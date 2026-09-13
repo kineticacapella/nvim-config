@@ -32,8 +32,8 @@ require("lazy").setup({
       highlight = { enable = true }, -- Syntax highlighting
       indent = { enable = true },    -- Smart indentation
     },
-  },
- 
+},
+
   -- Tinted theming support
   {
     "tinted-theming/tinted-vim",
@@ -51,16 +51,8 @@ require("lazy").setup({
   {
     "nvim-telescope/telescope.nvim",
     branch = "master",
-    dependencies = { "nvim-lua/plenary.nvim" }, -- Required dependency for Telescope
-    cmd = "Telescope", -- Load Telescope prior
-    keys = {
-    -- File Pickers
-  { "<leader>f", function() require("telescope.builtin").find_files() end, desc = "Open file picker" },
-  { "<leader>F", function() require("telescope.builtin").find_files({ cwd = vim.fn.getcwd() }) end, desc = "Open file picker at cwd" },
-  { "<leader>e", function() require("telescope.builtin").find_files() end, desc = "Open file explorer in workspace root" },
-  { "<leader>b", function() require("telescope.builtin").buffers() end, desc = "Open buffer picker" },
-
-     },
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = "Telescope",
   },
 
   -- Autopairs
