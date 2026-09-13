@@ -105,6 +105,7 @@ require("lazy").setup({
   -- Mason-LSPconfig
   {
     "williamboman/mason-lspconfig.nvim",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
     opts = {
       -- List of language servers
@@ -133,6 +134,7 @@ require("lazy").setup({
   -- Nvim-cmp for main autocomplete
   {
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter", -- Only load cmp on insert to reduce startup times
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",       -- LSP completion source
       "hrsh7th/cmp-buffer",         -- Buffer text completion source

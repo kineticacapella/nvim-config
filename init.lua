@@ -1,12 +1,13 @@
 require("config.options")
 require("config.keymaps")
 
--- Set StatusLine background to transparent before requiring lazy
+-- StatusLine colours
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = function()
-    vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE" })
-    vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "NONE" })
+    -- Set transparent background and custom text foreground color
+    vim.api.nvim_set_hl(0, "StatusLine", { bg = "#000000", fg = "#52ad70", bold = true })   -- Active statusline text
+    vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "#000000", fg = "#555555" }) -- Inactive statusline text
   end,
 })
 
