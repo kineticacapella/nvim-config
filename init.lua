@@ -1,11 +1,11 @@
 require("config.options")
 require("config.keymaps")
 
--- StatusLine colors (Dynamic Modes + Transparent BG)
+-- StatusLine colours
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = function()
-    -- Base transparent statuslines
+    -- Set transparency
     vim.api.nvim_set_hl(0, "StatusLine",   { bg = "NONE" })
     vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "NONE", fg = "#555555" })
 
@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "StatusLineNormal", { bg = "NONE", fg = "#52ad70", bold = true })
     vim.api.nvim_set_hl(0, "StatusLineInsert", { bg = "NONE", fg = "#5555ff", bold = true })
     vim.api.nvim_set_hl(0, "StatusLineVisual", { bg = "NONE", fg = "#cc55cc", bold = true })
-    vim.api.nvim_set_hl(0, "StatusLineCmd", { bg = "NONE", fg = "#cdcd55", bold = true })
+    vim.api.nvim_set_hl(0, "StatusLineCmd",    { bg = "NONE", fg = "#cdcd55", bold = true })
 
     -- Text elements
     vim.api.nvim_set_hl(0, "StatusLineInfo", { bg = "NONE", fg = "#52ad70" })
@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 -- Now load lazy
 require("config.lazy")
 
--- fixing warnings
+-- Fixing warnings
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -65,15 +65,15 @@ function _G.statusline_content()
   local mode = get_mode_info()
 
   return table.concat({
-    mode.hl, " ", mode.label, " ",               -- Dynamic Colored Mode
-    "%#StatusLineInfo#", get_git_branch(), " ", -- Git Branch
-    "%#StatusLinePath#%f %m",                   -- File Path & Modified flag
+    mode.hl, " ", mode.label, " ",              -- Dynamic coloured mode label ONLY
+    "%#StatusLineInfo#", get_git_branch(), " ", -- Git branch
+    "%#StatusLinePath#%f %m",                   -- File path and modified flag
     "%=",                                       -- Right-align separator
-    "%#StatusLineInfo#", get_diagnostics(), " ",-- LSP Errors
+    "%#StatusLineInfo#", get_diagnostics(), " ",-- LSP errors
     "%#StatusLinePath#%Y ",                     -- Filetype
-    mode.hl, "%l:%c %p%% ",                     -- Line:Col & Percentage matching Mode Color
+    "%#StatusLineInfo#", "%l:%c %p%% ",         -- Static position stats
   })
 end
 
--- Set the statusline to call our Lua function
+-- Set the statusline to call lua function
 vim.opt.statusline = "%!v:lua.statusline_content()"
