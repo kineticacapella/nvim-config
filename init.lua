@@ -1,13 +1,23 @@
 require("config.options")
 require("config.keymaps")
 
--- StatusLine colours
+-- StatusLine colors (Dynamic Modes + Transparent BG)
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = "*",
   callback = function()
-    -- Set transparent background and custom text foreground color
-    vim.api.nvim_set_hl(0, "StatusLine", { bg = "#000000", fg = "#52ad70", bold = true })   -- Active statusline text
-    vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "#000000", fg = "#555555" }) -- Inactive statusline text
+    -- Base transparent statuslines
+    vim.api.nvim_set_hl(0, "StatusLine",   { bg = "NONE" })
+    vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "NONE", fg = "#555555" })
+
+    -- Dynamic Mode Highlights
+    vim.api.nvim_set_hl(0, "StatusLineNormal", { bg = "NONE", fg = "#52ad70", bold = true })
+    vim.api.nvim_set_hl(0, "StatusLineInsert", { bg = "NONE", fg = "#5555ff", bold = true })
+    vim.api.nvim_set_hl(0, "StatusLineVisual", { bg = "NONE", fg = "#cc55cc", bold = true })
+    vim.api.nvim_set_hl(0, "StatusLineCmd", { bg = "NONE", fg = "#cdcd55", bold = true })
+
+    -- Text elements
+    vim.api.nvim_set_hl(0, "StatusLineInfo", { bg = "NONE", fg = "#52ad70" })
+    vim.api.nvim_set_hl(0, "StatusLinePath", { bg = "NONE", fg = "#cdd6f4" })
   end,
 })
 
@@ -19,13 +29,22 @@ vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 
--- Helper function to fetch current Vim mode in uppercase
-local function get_mode()
-  local modes = {
-    n = "NORMAL", i = "INSERT", v = "VISUAL", V = "V-LINE",
-    ["\22"] = "V-BLOCK", c = "COMMAND", R = "REPLACE", t = "TERMINAL",
-  }
-  return modes[vim.api.nvim_get_mode().mode] or "NORMAL"
+-- Map modes to labels and corresponding highlight groups
+local modes = {
+  ["n"]   = { label = "NORMAL",  hl = "%#StatusLineNormal#" },
+  ["i"]   = { label = "INSERT",  hl = "%#StatusLineInsert#" },
+  ["ic"]  = { label = "INSERT",  hl = "%#StatusLineInsert#" },
+  ["v"]   = { label = "VISUAL",  hl = "%#StatusLineVisual#" },
+  ["V"]   = { label = "V-LINE",  hl = "%#StatusLineVisual#" },
+  ["\22"] = { label = "V-BLOCK", hl = "%#StatusLineVisual#" },
+  ["c"]   = { label = "COMMAND", hl = "%#StatusLineCmd#" },
+  ["R"]   = { label = "REPLACE", hl = "%#StatusLineInsert#" },
+  ["t"]   = { label = "TERMINAL",hl = "%#StatusLineInsert#" },
+}
+
+local function get_mode_info()
+  local current_mode = vim.api.nvim_get_mode().mode
+  return modes[current_mode] or { label = "NORMAL", hl = "%#StatusLineNormal#" }
 end
 
 -- Helper function to fetch Git branch
@@ -43,14 +62,16 @@ end
 
 -- Build the statusline dynamically
 function _G.statusline_content()
+  local mode = get_mode_info()
+
   return table.concat({
-    "%#StatusLineAccent# ", get_mode(), " ",    -- Mode (Lualine section A)
-    "%#StatusLineInfo#", get_git_branch(), " ", -- Git Branch (Lualine section B)
-    "%#StatusLinePath# %f %m",                  -- File Path & Modified flag (Lualine section C)
+    mode.hl, " ", mode.label, " ",               -- Dynamic Colored Mode
+    "%#StatusLineInfo#", get_git_branch(), " ", -- Git Branch
+    "%#StatusLinePath#%f %m",                   -- File Path & Modified flag
     "%=",                                       -- Right-align separator
-    "%#StatusLineInfo#", get_diagnostics(), " ",-- LSP Errors (Lualine section X)
-    "%#StatusLinePath# %Y ",                    -- Filetype (Lualine section Y)
-    "%#StatusLineAccent# %l:%c %p%% ",          -- Line:Col & Percentage (Lualine section Z)
+    "%#StatusLineInfo#", get_diagnostics(), " ",-- LSP Errors
+    "%#StatusLinePath#%Y ",                     -- Filetype
+    mode.hl, "%l:%c %p%% ",                     -- Line:Col & Percentage matching Mode Color
   })
 end
 
