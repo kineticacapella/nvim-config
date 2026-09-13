@@ -33,7 +33,7 @@ require("lazy").setup({
       indent = { enable = true },    -- Smart indentation
     },
   },
-
+ 
   -- Tinted theming support
   {
     "tinted-theming/tinted-vim",
@@ -52,6 +52,15 @@ require("lazy").setup({
     "nvim-telescope/telescope.nvim",
     branch = "master",
     dependencies = { "nvim-lua/plenary.nvim" }, -- Required dependency for Telescope
+    cmd = "Telescope", -- Load Telescope prior
+    keys = {
+    -- File Pickers
+  { "<leader>f", function() require("telescope.builtin").find_files() end, desc = "Open file picker" },
+  { "<leader>F", function() require("telescope.builtin").find_files({ cwd = vim.fn.getcwd() }) end, desc = "Open file picker at cwd" },
+  { "<leader>e", function() require("telescope.builtin").find_files() end, desc = "Open file explorer in workspace root" },
+  { "<leader>b", function() require("telescope.builtin").buffers() end, desc = "Open buffer picker" },
+
+     },
   },
 
   -- Autopairs
@@ -68,29 +77,28 @@ require("lazy").setup({
       local alpha = require("alpha")
       local dashboard = require("alpha.themes.dashboard")
 
-
-dashboard.section.header.val = {
-        "Neovim" 
+      dashboard.section.header.val = {
+        "Neovim"
       }
 
-    -- Alpha sections
+      -- Alpha sections
       dashboard.section.buttons.val = {
         dashboard.button("e", "New", ":ene <BAR> startinsert <CR>"),
         dashboard.button("r", "Recent", ":Telescope oldfiles <CR>"),
         dashboard.button("f", "Find", ":Telescope find_files <CR>"),
-       -- dashboard.button("n", "init.lua", ":e $MYVIMRC <CR>"),
-       -- dashboard.button("l", "lazy.lua", ":e ~/.config/nvim/lua/config/lazy.lua <CR>"),
+        -- dashboard.button("n", "init.lua", ":e $MYVIMRC <CR>"),
+        -- dashboard.button("l", "lazy.lua", ":e ~/.config/nvim/lua/config/lazy.lua <CR>"),
         dashboard.button("p", "Lazy", ":Lazy<CR>"),
         dashboard.button("m", "Mason", ":Mason<CR>"),
         dashboard.button("q", "Quit", ":qa<CR>"),
-      } 
+      }
 
       -- Send config to alpha
       alpha.setup(dashboard.opts)
     end,
   },
 
-  -- Mason 
+  -- Mason
   { "williamboman/mason.nvim", opts = {} },
 
   -- Mason-LSPconfig
@@ -128,7 +136,7 @@ dashboard.section.header.val = {
       "hrsh7th/cmp-nvim-lsp",       -- LSP completion source
       "hrsh7th/cmp-buffer",         -- Buffer text completion source
       "hrsh7th/cmp-path",           -- File path completion source
-      
+
       -- LuaSnip for snippet engine
       {
         "L3MON4D3/LuaSnip",
@@ -140,7 +148,7 @@ dashboard.section.header.val = {
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
-      
+
       -- Load friendly-snippets
       require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -151,7 +159,7 @@ dashboard.section.header.val = {
             luasnip.lsp_expand(args.body)
           end,
         },
-        
+
         -- Keyboard shortcuts for the completion menu
         mapping = cmp.mapping.preset.insert({
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),       -- Scroll docs up
@@ -159,7 +167,7 @@ dashboard.section.header.val = {
           ["<C-Space>"] = cmp.mapping.complete(),        -- Manually trigger completion
           ["<C-e>"] = cmp.mapping.abort(),               -- Close completion window
           ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Hit enter to confirm selection
-          
+
           -- Tab functionality
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
@@ -170,7 +178,7 @@ dashboard.section.header.val = {
               fallback()
             end
           end, { "i", "s" }),
-          
+
           -- Shift+Tab
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
@@ -182,7 +190,7 @@ dashboard.section.header.val = {
             end
           end, { "i", "s" }),
         }),
-        
+
         -- Where nvim-cmp should look for completion suggestions (in order)
         sources = cmp.config.sources({
           { name = "nvim_lsp" }, -- Suggestions from Langage Servers
