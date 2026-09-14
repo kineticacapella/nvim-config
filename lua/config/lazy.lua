@@ -1,5 +1,5 @@
 -- =====================================================================
--- 1. PLUGIN MANAGER SETUP (lazy.nvim)
+-- 1. LAZY SETUP
 -- =====================================================================
 
 -- Define lazy installation path
@@ -100,7 +100,12 @@ require("lazy").setup({
   },
 
   -- Mason
-  { "williamboman/mason.nvim", opts = {} },
+ {
+  "williamboman/mason.nvim",
+  cmd = "Mason",
+  event = { "BufReadPre", "BufNewFile" },
+  opts = {},
+},
 
   -- Mason-LSPconfig
   {
