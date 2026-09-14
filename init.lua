@@ -31,15 +31,15 @@ vim.g.loaded_ruby_provider = 0
 
 -- Map modes to labels and corresponding highlight groups
 local modes = {
-  ["n"]   = { label = "NORMAL",  hl = "%#StatusLineNormal#" },
-  ["i"]   = { label = "INSERT",  hl = "%#StatusLineInsert#" },
-  ["ic"]  = { label = "INSERT",  hl = "%#StatusLineInsert#" },
-  ["v"]   = { label = "VISUAL",  hl = "%#StatusLineVisual#" },
-  ["V"]   = { label = "V-LINE",  hl = "%#StatusLineVisual#" },
-  ["\22"] = { label = "V-BLOCK", hl = "%#StatusLineVisual#" },
-  ["c"]   = { label = "COMMAND", hl = "%#StatusLineCmd#" },
-  ["R"]   = { label = "REPLACE", hl = "%#StatusLineInsert#" },
-  ["t"]   = { label = "TERMINAL",hl = "%#StatusLineInsert#" },
+  ["n"]   = { label = "NOR",  hl = "%#StatusLineNormal#" },
+  ["i"]   = { label = "INS",  hl = "%#StatusLineInsert#" },
+  ["ic"]  = { label = "INS",  hl = "%#StatusLineInsert#" },
+  ["v"]   = { label = "VIS",  hl = "%#StatusLineVisual#" },
+  ["V"]   = { label = "V-L",  hl = "%#StatusLineVisual#" },
+  ["\22"] = { label = "V-B", hl = "%#StatusLineVisual#" },
+  ["c"]   = { label = "CMD", hl = "%#StatusLineCmd#" },
+  ["R"]   = { label = "REP", hl = "%#StatusLineInsert#" },
+  ["t"]   = { label = "TERM",hl = "%#StatusLineInsert#" },
 }
 
 local function get_mode_info()
