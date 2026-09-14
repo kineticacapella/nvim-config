@@ -8,9 +8,12 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 -- How to clone
 if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
-    "git", "clone", "--filter=blob:none",
+    "git",
+    "clone",
+    "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", lazypath,
+    "--branch=stable",
+    lazypath,
   })
 end
 
@@ -26,13 +29,22 @@ require("lazy").setup({
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate", -- Automatically update parsers
+    build = ":TSUpdate",
     opts = {
-      ensure_installed = { "lua", "vim", "vimdoc", "javascript", "python", "html", "css", "zig" },
-      highlight = { enable = true }, -- Syntax highlighting
-      indent = { enable = true },    -- Smart indentation
+      ensure_installed = {
+        "lua",
+        "vim",
+        "vimdoc",
+        "javascript",
+        "python",
+        "html",
+        "css",
+        "zig",
+      },
+      highlight = { enable = true },
+      indent = { enable = true },
     },
-},
+  },
 
   -- Tinted theming support
   {
@@ -58,7 +70,7 @@ require("lazy").setup({
   -- Autopairs
   {
     "windwp/nvim-autopairs",
-    event = "InsertEnter", -- Only load this plugin when you start typing
+    event = "InsertEnter",
     opts = {},
   },
 
@@ -70,7 +82,7 @@ require("lazy").setup({
       local dashboard = require("alpha.themes.dashboard")
 
       dashboard.section.header.val = {
-        "NEOVIM"
+        "NEOVIM",
       }
 
       -- Alpha sections
@@ -100,12 +112,12 @@ require("lazy").setup({
   },
 
   -- Mason
- {
-  "williamboman/mason.nvim",
-  cmd = "Mason",
-  event = { "BufReadPre", "BufNewFile" },
-  opts = {},
-},
+  {
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
+  },
 
   -- Mason-LSPconfig
   {
@@ -114,7 +126,14 @@ require("lazy").setup({
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
     opts = {
       -- List of language servers
-      ensure_installed = { "lua_ls", "zls", "pyright", "ts_ls", "html", "cssls" },
+      ensure_installed = {
+        "lua_ls",
+        "zls",
+        "pyright",
+        "ts_ls",
+        "html",
+        "cssls",
+      },
       handlers = {
         -- Default setup for all language servers
         function(server_name)
@@ -139,19 +158,19 @@ require("lazy").setup({
   -- Nvim-cmp for main autocomplete
   {
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter", -- Only load cmp on insert to reduce startup times
+    event = "InsertEnter",
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",       -- LSP completion source
-      "hrsh7th/cmp-buffer",         -- Buffer text completion source
-      "hrsh7th/cmp-path",           -- File path completion source
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
 
       -- LuaSnip for snippet engine
       {
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
       },
-      "saadparwaiz1/cmp_luasnip",   -- Bridges LuaSnip with nvim-cmp
-      "rafamadriz/friendly-snippets", -- Pre-made snippets
+      "saadparwaiz1/cmp_luasnip",
+      "rafamadriz/friendly-snippets",
     },
     config = function()
       local cmp = require("cmp")
@@ -170,11 +189,11 @@ require("lazy").setup({
 
         -- Keyboard shortcuts for the completion menu
         mapping = cmp.mapping.preset.insert({
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),       -- Scroll docs up
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),        -- Scroll docs down
-          ["<C-Space>"] = cmp.mapping.complete(),        -- Manually trigger completion
-          ["<C-e>"] = cmp.mapping.abort(),               -- Close completion window
-          ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Hit enter to confirm selection
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
 
           -- Tab functionality
           ["<Tab>"] = cmp.mapping(function(fallback)
@@ -201,10 +220,10 @@ require("lazy").setup({
 
         -- Where nvim-cmp should look for completion suggestions (in order)
         sources = cmp.config.sources({
-          { name = "nvim_lsp" }, -- Suggestions from Langage Servers
-          { name = "luasnip" },  -- Suggestions from Snippets
-          { name = "buffer" },   -- Suggestions from words in the current file
-          { name = "path" },     -- Suggestions from computer's file paths
+          { name = "nvim_lsp" },
+          { name = "luasnip" },
+          { name = "buffer" },
+          { name = "path" },
         }),
       })
     end,
