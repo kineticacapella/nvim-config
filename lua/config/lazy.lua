@@ -70,7 +70,7 @@ require("lazy").setup({
       local dashboard = require("alpha.themes.dashboard")
 
       dashboard.section.header.val = {
-        "Neovim"
+        "NEOVIM"
       }
 
       -- Alpha sections
