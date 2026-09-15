@@ -9,6 +9,7 @@ return {
 
     telescope.setup({
       defaults = {
+        prompt_prefix = " ", -- No prompt prefix
         sorting_strategy = "ascending",
         layout_strategy = "horizontal",
         layout_config = {
@@ -24,6 +25,9 @@ return {
         borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
       },
     })
+
+    -- Disable highlighting on selected items
+    vim.api.nvim_set_hl(0, "TelescopeSelection", { bg = "NONE", bold = true })
 
     telescope.load_extension("file_browser")
   end,
