@@ -26,6 +26,8 @@ vim.opt.rtp:prepend(lazypath)
 -- =====================================================================
 
 require("lazy").setup({
+  { import = "plugins" },
+
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -59,15 +61,7 @@ require("lazy").setup({
     end,
   },
 
-  -- Telescope
-  {
-    "nvim-telescope/telescope.nvim",
-    branch = "master",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    cmd = "Telescope",
-  },
-
-  -- Autopairs
+-- Autopairs
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
