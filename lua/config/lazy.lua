@@ -48,16 +48,29 @@ require("lazy").setup({
     },
   },
 
-  -- Tinted theming support
+  -- Direct colorscheme (no plugin overhead)
   {
-    "tinted-theming/tinted-vim",
+    dir = vim.fn.stdpath("config"),
+    name = "base24-wez",
     lazy = false,
     priority = 1000,
     config = function()
-      vim.g.tinted_background_transparent = 1
-      vim.g.tinted_italic = 0
       vim.opt.termguicolors = true
       vim.cmd.colorscheme("base24-wez")
+      vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE", ctermbg = "NONE" })
+      vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE", ctermbg = "NONE" })
+      vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "NONE", ctermbg = "NONE" })
+      vim.api.nvim_set_hl(0, "LineNr", { bg = "NONE", ctermbg = "NONE" })
+      vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "NONE", ctermbg = "NONE", bold = true })
+      vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE", ctermbg = "NONE" })
+      vim.api.nvim_set_hl(0, "FoldColumn", { bg = "NONE", ctermbg = "NONE" })
+      vim.api.nvim_set_hl(0, "Comment", { italic = false })
+      vim.api.nvim_set_hl(0, "@comment", { italic = false })
+      vim.api.nvim_set_hl(0, "@keyword", { italic = false })
+      vim.api.nvim_set_hl(0, "@type", { italic = false })
+      vim.api.nvim_set_hl(0, "@function", { italic = false })
+      vim.api.nvim_set_hl(0, "@variable", { italic = false })
     end,
   },
 
@@ -93,6 +106,12 @@ require("lazy").setup({
 
       -- Send config to alpha
       alpha.setup(dashboard.opts)
+
+      -- Fix black rectangle: make alpha background transparent
+      vim.api.nvim_set_hl(0, "AlphaHeader", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "AlphaButtons", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "AlphaShortcut", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "AlphaFooter", { bg = "NONE" })
     end,
   },
 
