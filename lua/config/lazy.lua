@@ -48,7 +48,7 @@ require("lazy").setup({
     },
   },
 
-  -- Direct colorscheme (no plugin overhead)
+  -- Colours with base24-wez /colors/base24-wez.vim
   {
     dir = vim.fn.stdpath("config"),
     name = "base24-wez",
@@ -107,7 +107,7 @@ require("lazy").setup({
       -- Send config to alpha
       alpha.setup(dashboard.opts)
 
-      -- Fix black rectangle: make alpha background transparent
+      -- Make alpha background transparent
       vim.api.nvim_set_hl(0, "AlphaHeader", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "AlphaButtons", { bg = "NONE" })
       vim.api.nvim_set_hl(0, "AlphaShortcut", { bg = "NONE" })
