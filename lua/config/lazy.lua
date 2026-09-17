@@ -52,8 +52,9 @@ require("lazy").setup({
   {
     dir = vim.fn.stdpath("config"),
     name = "base24-wez",
-    lazy = false,
+    lazy = true,
     priority = 1000,
+    event = "UIEnter",
     config = function()
       vim.opt.termguicolors = true
       vim.cmd.colorscheme("base24-wez")
@@ -71,6 +72,16 @@ require("lazy").setup({
       vim.api.nvim_set_hl(0, "@type", { italic = false })
       vim.api.nvim_set_hl(0, "@function", { italic = false })
       vim.api.nvim_set_hl(0, "@variable", { italic = false })
+
+      -- StatusLine colours (override theme defaults)
+      vim.api.nvim_set_hl(0, "StatusLine", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "StatusLineNC", { bg = "NONE", fg = "#555555" })
+      vim.api.nvim_set_hl(0, "StatusLineNormal", { bg = "NONE", fg = "#52ad70", bold = true })
+      vim.api.nvim_set_hl(0, "StatusLineInsert", { bg = "NONE", fg = "#5555ff", bold = true })
+      vim.api.nvim_set_hl(0, "StatusLineVisual", { bg = "NONE", fg = "#cc55cc", bold = true })
+      vim.api.nvim_set_hl(0, "StatusLineCmd", { bg = "NONE", fg = "#cdcd55", bold = true })
+      vim.api.nvim_set_hl(0, "StatusLineInfo", { bg = "NONE", fg = "#52ad70" })
+      vim.api.nvim_set_hl(0, "StatusLinePath", { bg = "NONE", fg = "#cdd6f4" })
     end,
   },
 
