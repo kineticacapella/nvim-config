@@ -1,5 +1,17 @@
 " vi:syntax=vim
 
+" Modified by Gemini from base24-wez from vim-tinted
+
+" To fix the gray syntax highlighting while keeping your exact color palette, the following minimal modifications were applied:
+
+" Renamed the theme to base24-wez-helix.
+
+" Reverted Identifier to s:gui08 (Base08/Red) to comply with the styling spec.
+
+" Updated specific Treesitter highlights (@variable.builtin, @variable.member, @module.builtin) to s:gui08 so properties like vim.fn and lazypath highlight properly.
+
+" Standardized a few other incorrect gray defaults (e.g., mapping markdownError and GitSignsDeleteVirtLn to s:gui08).
+
 " tinted-vim (https://github.com/tinted-theming/tinted-vim)
 " Scheme name: Wez Helix
 " Scheme author: FredHappyface (https://github.com/fredHappyface)

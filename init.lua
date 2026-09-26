@@ -1,3 +1,5 @@
+vim.g.tinted_background_transparent = 1
+
 require("config.options")
 require("config.keymaps")
 
