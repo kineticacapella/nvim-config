@@ -157,6 +157,7 @@ require("lazy").setup({
         "ts_ls",
         "html",
         "cssls",
+        "nixd",
       },
       handlers = {
         -- Default setup for all language servers
@@ -171,6 +172,26 @@ require("lazy").setup({
                 -- Stop Lua from complaining about 'vim' being undefined
                 diagnostics = { globals = { "vim" } },
                 workspace = { checkThirdParty = false },
+              },
+            },
+          })
+        end,
+        ["nixd"] = function()
+          require("lspconfig").nixd.setup({
+            cmd = { "nixd" },
+            settings = {
+              nixd = {
+                formatting = {
+                  command = { "nixfmt" },
+                },
+                options = {
+                  nixos = {
+                    expr = '(builtins.getFlake "/etc/nixos").nixosConfigurations.' .. vim.fn.hostname() .. '.options',
+                  },
+                  home_manager = {
+                    expr = '(builtins.getFlake "/etc/nixos").homeConfigurations."user@' .. vim.fn.hostname() .. '".options',
+                  },
+                },
               },
             },
           })
