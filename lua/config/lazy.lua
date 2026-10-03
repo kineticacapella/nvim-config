@@ -149,7 +149,6 @@ require("lazy").setup({
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
     opts = {
-      -- List of language servers
       ensure_installed = {
         "lua_ls",
         "zls",
@@ -158,50 +157,49 @@ require("lazy").setup({
         "html",
         "cssls",
       },
-      handlers = {
-        -- Default setup for all language servers
-        function(server_name)
-          require("lspconfig")[server_name].setup({})
-        end,
-        -- Setup specifically for the Lua lsp
-        ["lua_ls"] = function()
-          require("lspconfig").lua_ls.setup({
-            settings = {
-              Lua = {
-                -- Stop Lua from complaining about 'vim' being undefined
-                diagnostics = { globals = { "vim" } },
-                workspace = { checkThirdParty = false },
-              },
-            },
-          })
-        end,
-      },
     },
-  },
+    config = function(_, opts)
+      require("mason-lspconfig").setup(opts)
 
-  -- nixd LSP (not in mason registry)
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        nixd = {
-          cmd = { "nixd" },
-          settings = {
-            nixd = {
-              formatting = { command = { "nixfmt" } },
-              options = {
-                nixos = {
-                  expr = '(builtins.getFlake "/etc/nixos").nixosConfigurations.' .. vim.fn.hostname() .. '.options',
-                },
-                home_manager = {
-                  expr = '(builtins.getFlake "/etc/nixos").homeConfigurations."user@' .. vim.fn.hostname() .. '".options',
-                },
+      -- lua_ls
+      vim.lsp.config("lua_ls", {
+        settings = {
+          Lua = {
+            diagnostics = { globals = { "vim" } },
+            workspace = { checkThirdParty = false },
+          },
+        },
+      })
+
+      -- nixd (not in mason)
+      vim.lsp.config("nixd", {
+        cmd = { "nixd" },
+        settings = {
+          nixd = {
+            formatting = { command = { "nixfmt" } },
+            options = {
+              nixos = {
+                expr = '(builtins.getFlake "/etc/nixos").nixosConfigurations.' .. vim.fn.hostname() .. '.options',
+              },
+              home_manager = {
+                expr = '(builtins.getFlake "/etc/nixos").homeConfigurations."user@' .. vim.fn.hostname() .. '".options',
               },
             },
           },
         },
-      },
-    },
+      })
+
+      -- Enable all installed servers
+      vim.lsp.enable({
+        "lua_ls",
+        "zls",
+        "pyright",
+        "ts_ls",
+        "html",
+        "cssls",
+        "nixd",
+      })
+    end,
   },
 
   -- Nvim-cmp for main autocomplete
