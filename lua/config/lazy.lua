@@ -157,7 +157,6 @@ require("lazy").setup({
         "ts_ls",
         "html",
         "cssls",
-        "nixd",
       },
       handlers = {
         -- Default setup for all language servers
@@ -176,26 +175,31 @@ require("lazy").setup({
             },
           })
         end,
-        ["nixd"] = function()
-          require("lspconfig").nixd.setup({
-            cmd = { "nixd" },
-            settings = {
-              nixd = {
-                formatting = {
-                  command = { "nixfmt" },
+      },
+    },
+  },
+
+  -- nixd LSP (not in mason registry)
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        nixd = {
+          cmd = { "nixd" },
+          settings = {
+            nixd = {
+              formatting = { command = { "nixfmt" } },
+              options = {
+                nixos = {
+                  expr = '(builtins.getFlake "/etc/nixos").nixosConfigurations.' .. vim.fn.hostname() .. '.options',
                 },
-                options = {
-                  nixos = {
-                    expr = '(builtins.getFlake "/etc/nixos").nixosConfigurations.' .. vim.fn.hostname() .. '.options',
-                  },
-                  home_manager = {
-                    expr = '(builtins.getFlake "/etc/nixos").homeConfigurations."user@' .. vim.fn.hostname() .. '".options',
-                  },
+                home_manager = {
+                  expr = '(builtins.getFlake "/etc/nixos").homeConfigurations."user@' .. vim.fn.hostname() .. '".options',
                 },
               },
             },
-          })
-        end,
+          },
+        },
       },
     },
   },
